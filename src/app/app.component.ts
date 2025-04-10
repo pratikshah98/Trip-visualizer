@@ -26,9 +26,6 @@ export class AppComponent {
 
   isConnected(index: number): boolean {
     if (index === 0) return true;
-    console.log('this.trips[index - 1].end === this.trips[index].start;',this.trips[index - 1].end === this.trips[index].start)
-    console.log(this.trips[index - 1].end)
-    console.log(this.trips[index ].start)
     return this.trips[index - 1].end === this.trips[index].start;
   }
 
@@ -38,15 +35,8 @@ export class AppComponent {
       this.trips[index - 1].start === this.trips[index].start &&
       this.trips[index - 1].end === this.trips[index].end
     ) {
-      console.log('insdde 2',index)
-      console.log('insdde 2',this.trips[index - 1].start )
-      console.log('aa', this.trips[index].start)
-      console.log('insdde 2',this.trips[index - 1].end) 
-      console.log('dsft',this.trips[index].end)
-      
       return 2;
     }
-    // console.log('insd 1')
     return 1;
   }
 

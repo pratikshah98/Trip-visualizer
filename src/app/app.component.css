@@ -1,10 +1,12 @@
 .form-container {
   margin-bottom: 20px;
 }
+
 input {
   margin-right: 10px;
   padding: 5px;
 }
+
 button {
   padding: 5px 10px;
   background-color: #007bff;
@@ -12,10 +14,12 @@ button {
   border: none;
   cursor: pointer;
 }
+
 svg {
   background: #f9f9f9;
   border: 1px solid #ddd;
 }
+
 text {
   font-family: Arial, sans-serif;
 }

@@ -5,69 +5,53 @@
 </div>
 
 <div class="svg-scroll-container">
-<svg [attr.width]="trips.length * 150 + 100" height="250">
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
-      <path d="M0,0 L10,5 L0,10 Z" fill="orange" />
-    </marker>
-  </defs>
+  <svg [attr.width]="trips.length * 150 + 100" height="250">
+    <defs>
+      <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
+        <path d="M0,0 L10,5 L0,10 Z" fill="orange" />
+      </marker>
+    </defs>
 
-  <!-- If only one trip, show two nodes and label -->
-  <ng-container *ngIf="trips.length === 1">
-    <circle [attr.cx]="20" cy="100" r="6" fill="gray" />
-    <circle [attr.cx]="170" cy="100" r="6" fill="gray" />
-    <text x="10" y="130" font-size="12">{{ trips[0].start }} - {{ trips[0].end }}</text>
-  </ng-container>
-
-  <!-- Render trips from second trip onward -->
-  <ng-container *ngFor="let trip of trips; let i = index">
-    <ng-container *ngIf="i > 0">
-      <ng-container [ngSwitch]="getTripLevel(i)">
-        <!-- Level 1: connected or non-connected -->
-        <line *ngSwitchCase="1"
-              [attr.x1]="(i - 1) * 150 + 20"
-              y1="100"
-              [attr.x2]="i * 150 + 20"
-              y2="100"
-              [attr.stroke]="isConnected(i) ? 'blue' : 'orange'"
-              [attr.marker-end]="!isConnected(i) ? 'url(#arrow)' : null"
-              stroke-width="2" />
-
-        <!-- Level 2: repeated trips -->
-        <path *ngSwitchCase="2"
-              [attr.d]="'M' + ((i - 1) * 150 + 20) + ',100 C' + (((i - 1) * 150 + 20) + 50) + ',20 ' + ((i * 150 + 20) - 50) + ',20 ' + (i * 150 + 20) + ',100'"
-              stroke="gray"
-              fill="transparent"
-              stroke-width="2" />
-      </ng-container>
-
-      <!-- Node circle -->
-      <circle [attr.cx]="(i - 1) * 150 + 20"
-              cy="100"
-              r="6"
-              [attr.fill]="getTripLevel(i) === 2 ? 'lightgray' : (isConnected(i) ? 'blue' : 'orange')" />
-
-      <!-- Trip label -->
-      <text [attr.x]="(i - 1) * 150 + 10" y="130" font-size="12">
-        {{ trips[i - 1].start }} - {{ trips[i - 1].end }}
-      </text>
+    <!-- If only one trip, show two nodes and label -->
+    <ng-container *ngIf="trips.length === 1">
+      <circle [attr.cx]="20" cy="100" r="6" fill="gray" />
+      <circle [attr.cx]="170" cy="100" r="6" fill="gray" />
+      <text x="10" y="130" font-size="12">{{ trips[0].start }} - {{ trips[0].end }}</text>
     </ng-container>
-  </ng-container>
 
-  <!-- Final end node -->
-  <circle *ngIf="trips.length > 1"
-          [attr.cx]="(trips.length - 1) * 150 + 20"
-          cy="100"
-          r="6"
-          stroke="black"
-          fill="white" />
+    <!-- Render trips from second trip onward -->
+    <ng-container *ngFor="let trip of trips; let i = index">
+      <ng-container *ngIf="i > 0">
+        <ng-container [ngSwitch]="getTripLevel(i)">
+          <!-- Level 1: connected or non-connected -->
+          <line *ngSwitchCase="1" [attr.x1]="(i - 1) * 150 + 20" y1="100" [attr.x2]="i * 150 + 20" y2="100"
+            [attr.stroke]="isConnected(i) ? 'blue' : 'orange'"
+            [attr.marker-end]="!isConnected(i) ? 'url(#arrow)' : null" stroke-width="2" />
 
-  <!-- Final trip label -->
-  <text *ngIf="trips.length > 1"
-        [attr.x]="(trips.length - 1) * 150 + 10"
-        y="130"
-        font-size="12">
-    {{ trips[trips.length - 1].start }} - {{ trips[trips.length - 1].end }}
-  </text>
-</svg>
+          <!-- Level 2: repeated trips -->
+          <path *ngSwitchCase="2"
+            [attr.d]="'M' + ((i - 1) * 150 + 20) + ',100 C' + (((i - 1) * 150 + 20) + 50) + ',20 ' + ((i * 150 + 20) - 50) + ',20 ' + (i * 150 + 20) + ',100'"
+            stroke="gray" fill="transparent" stroke-width="2" />
+        </ng-container>
+
+        <!-- Node circle -->
+        <circle [attr.cx]="(i - 1) * 150 + 20" cy="100" r="6"
+          [attr.fill]="getTripLevel(i) === 2 ? 'lightgray' : (isConnected(i) ? 'blue' : 'orange')" />
+
+        <!-- Trip label -->
+        <text [attr.x]="(i - 1) * 150 + 10" y="130" font-size="12">
+          {{ trips[i - 1].start }} - {{ trips[i - 1].end }}
+        </text>
+      </ng-container>
+    </ng-container>
+
+    <!-- Final end node -->
+    <circle *ngIf="trips.length > 1" [attr.cx]="(trips.length - 1) * 150 + 20" cy="100" r="6" stroke="black"
+      fill="white" />
+
+    <!-- Final trip label -->
+    <text *ngIf="trips.length > 1" [attr.x]="(trips.length - 1) * 150 + 10" y="130" font-size="12">
+      {{ trips[trips.length - 1].start }} - {{ trips[trips.length - 1].end }}
+    </text>
+  </svg>
 </div>
